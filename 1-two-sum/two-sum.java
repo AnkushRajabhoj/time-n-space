@@ -1,21 +1,17 @@
-// Time complexity = O(nums)
-// Space complexity = O(nums)
-
-
 class Solution {
     public int[] twoSum(int[] nums, int target) {
 
         // Number -> Index
-        HashMap<Integer, Integer> map = new HashMap<>();
+        var indexMap = new HashMap<Integer, Integer>();
 
-        for(int i = 0; i < nums.length; i++) {
-            int desiredNumber = target - nums[i];
+        for(var i = 0; i < nums.length; i++) {
+            var desiredNumber = target - nums[i];
 
-            if (map.containsKey(desiredNumber)) {
-                return new int[]{map.get(desiredNumber), i};
+            if (indexMap.containsKey(desiredNumber)) {
+                return new int[]{indexMap.get(desiredNumber), i};
             }
 
-            map.put(nums[i], i);
+            indexMap.put(nums[i], i);
         }
 
         return new int[]{-1,-1};
