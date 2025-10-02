@@ -1,17 +1,41 @@
 class BoundedBlockingQueue {
 
-    BlockingQueue<Integer> queue;
+    Queue<Integer> queue;
+    int capacity;
+    Lock lock = new ReentrantLock();
+    Condition notEmpty = lock.newCondition();
+    Condition notFull = lock.newCondition();
 
     public BoundedBlockingQueue(int capacity) {
-        queue = new ArrayBlockingQueue<>(capacity);
+        this.capacity = capacity;
+        queue = new ArrayDeque<>(capacity);
     }
     
     public void enqueue(int element) throws InterruptedException {
-        queue.put(element);
+        lock.lock();
+        try {
+            while(queue.size() == capacity) {
+                notFull.await();
+            }
+            queue.add(element);
+            notEmpty.signal();
+        } finally {
+            lock.unlock();
+        }
     }
     
     public int dequeue() throws InterruptedException {
-        return queue.take();
+        lock.lock();
+        try {
+            while(queue.size() == 0) {
+                notEmpty.await();
+            }
+            int element = queue.remove();
+            notFull.signal();
+            return element;
+        } finally {
+            lock.unlock();
+        }
     }
     
     public int size() {
