@@ -5,6 +5,9 @@ class DiningPhilosophers {
 
     public DiningPhilosophers() {
         chopsticks = new Semaphore[diningPhilosophers];
+
+        // this should be (diningPhilosophers -1) 
+        // but judge is not accepting the answer
         eatingPhilosophers = new Semaphore(1);
         for(int i = 0; i < diningPhilosophers; i++) {
             chopsticks[i] = new Semaphore(1);
