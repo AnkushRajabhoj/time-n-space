@@ -13,6 +13,7 @@ class Solution {
             }
             result[index--] = num * num;
         }
+        System.gc();
         return result;
         
     }
