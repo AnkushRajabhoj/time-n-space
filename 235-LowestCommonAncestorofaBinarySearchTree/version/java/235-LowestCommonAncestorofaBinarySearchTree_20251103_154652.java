@@ -1,0 +1,27 @@
+// Last updated: 03/11/2025, 15:46:52
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        int pv = p.val;
+        int qv = q.val;
+        while(root != null){
+            if(root.val < pv && root.val < qv){
+                    root = root.right;
+            }else if(root.val > pv && root.val > qv){
+                root = root.left;
+            }else{
+                return root;
+            }
+        }
+        return null;
+    }
+}
